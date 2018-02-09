@@ -21,9 +21,15 @@
     <ClCompile Include="sort.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="leetcode.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="head.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="leetcode.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

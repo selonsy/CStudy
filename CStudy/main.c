@@ -1,6 +1,4 @@
-
-#include "stdio.h" //预处理命令,它的作用是通知C语言编译系统在对C程序进行正式编译之前需做一些预处理工作
-#include "time.h"
+#include "head.h"
 
 #pragma region 练手的函数
 //判断闰年
@@ -181,20 +179,22 @@ int my_test1()
 //C程序就是执行主函数里的代码,也可以说这个主函数就是C语言中的唯一入口.
 int main() //注:在最新的C标准中,main函数前的类型为int而不是void
 {
+#pragma region History
+
 	//printf("Hello World!\n");
 
 	//printf("%d年%s闰年\n",1900,is_leap_year(1900)==1?"是":"不是");
-	
+
 	//triangle_print(10);
 
 	//multi_9();
-	
+
 	//su_shu(1000);
 
 	//the_day_of_year(2008, 8, 8);
-	
+
 	//monkey_eat_peach(1);	
-	
+
 	//printf("第5个人的年龄是%d岁\n", factorial_test(5));
 
 	//xiaoming_dache(12, 9, 18);
@@ -204,7 +204,40 @@ int main() //注:在最新的C标准中,main函数前的类型为int而不是void
 	//paixu_maopao();
 
 	//my_test1();
-	printf("hello world!\n");
+
+	//printf("hello world!\n");
+
+#pragma endregion
+
+	////NO.1
+	//int nums[] = { 2,7,11,15 };
+	//int *p = twoSum(nums, 4, 9);
+	//printf("[%d,%d]",p[0],p[1]);
+	
+	//NO.2
+	Node p1[3],p2[3];
+	int nums1[] = { 2,4,3 };
+	int nums2[] = { 5,6,4 };
+	PNode head_node1 = (PNode)malloc(sizeof(Node) / sizeof(char));
+	head_node1->next = NULL;
+	PNode head_node2 = (PNode)malloc(sizeof(Node) / sizeof(char));
+	head_node2->next = NULL;
+	for (int i = 0; i < Get_Length_Of_Array(nums1); i++)
+	{
+		if (Create_List_Head(head_node1, nums1[i]) != OK)
+		{
+			return ERROR;
+		}
+	}
+	for (int j = 0; j < Get_Length_Of_Array(nums2); j++)
+	{
+		if (Create_List_Head(head_node2, nums2[j]) != OK)
+		{
+			return ERROR;
+		}
+	}
+	PNode result = addTwoNumbers(head_node1, head_node2);
+
 	system("pause");
 	return 0;
 }
