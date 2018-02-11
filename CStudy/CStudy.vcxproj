@@ -140,12 +140,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="leetcode.c" />
+    <ClCompile Include="lib.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="sort.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="head.h" />
     <ClInclude Include="leetcode.h" />
+    <ClInclude Include="lib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
