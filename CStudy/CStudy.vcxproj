@@ -143,11 +143,13 @@
     <ClCompile Include="lib.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="sort.c" />
+    <ClCompile Include="temp.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="head.h" />
     <ClInclude Include="leetcode.h" />
     <ClInclude Include="lib.h" />
+    <ClInclude Include="temp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
