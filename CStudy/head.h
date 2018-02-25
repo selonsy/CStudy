@@ -1,4 +1,5 @@
 #include "stdio.h" 
+
 #include <malloc.h>
 #include <time.h>
 #ifndef __HEAD_H__
