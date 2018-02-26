@@ -41,44 +41,6 @@ int main()
 
 #pragma endregion
 
-	////NO.1
-	//int nums[] = { 2,7,11,15 };
-	//int *p = twoSum(nums, 4, 9);
-	//printf("[%d,%d]",p[0],p[1]);
-	
-	////NO.2	
-	//int nums1[] = { 5 };// { 2,4,3 };
-	//int nums2[] = { 5 };// { 5,6,4 };
-	//PNode head_node1 = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//PNode head_node2 = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//PNode node_1,node_2;
-	//node_1 = head_node1;
-	//node_2 = head_node2;
-	//head_node1->data = nums1[0];
-	//head_node1->next = NULL;	
-	//head_node2->data = nums2[0];
-	//head_node2->next = NULL;
-	//for (int i = 1; i < sizeof(nums1)/sizeof(int); i++)
-	//{
-	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//	node_t->data = nums1[i];		
-	//	node_1->next = node_t;
-	//	node_1 = node_t;
-	//}
-	//for (int i = 1; i < sizeof(nums2) / sizeof(int); i++)
-	//{
-	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//	node_t->data = nums2[i];
-	//	node_2->next = node_t;
-	//	node_2 = node_t;
-	//}
-	//node_1->next = NULL;
-	//node_2->next = NULL;
-	//	
-	//PNode result = addTwoNumbers(head_node1, head_node2);	
-	//DisPlay(result);
-
-
 	c_test_for_study();
 
 	system("pause");
