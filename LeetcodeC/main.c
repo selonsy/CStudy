@@ -40,6 +40,10 @@ int main()
 	//PNode result = addTwoNumbers(head_node1, head_node2);	
 	//DisPlay(result);
 
+	//NO.3
+	char* s = "shenjinlong";
+	int max = lengthOfLongestSubstring(s);
+	printf("the length of max_substring is %d", max);
 	system("pause");
 	return 0;
 
@@ -138,6 +142,71 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
 		q->next = end;
 	}
 	return p;
+}
+
+/*
+NO 3. Accepted Runtime:36 ms
+Given a string, find the length of the longest substring without repeating characters.
+Examples:
+Given "abcabcbb", the answer is "abc", which the length is 3.
+Given "bbbbb", the answer is "b", with the length of 1.
+Given "pwwkew", the answer is "wke", with the length of 3. Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
+*/
+int lengthOfLongestSubstring(char* s) {
+	int exist[256];
+	int i, j,k;
+	for (k = 0; k < 256; k++)
+	{
+		exist[k] = 0;
+	}
+	int max = 0;
+	
+	for (i = 0; s[i] != NULL; i++)
+	{		
+		exist[s[i]] = 1;
+		int count = 1;
+		for (j = i + 1; s[j] != NULL; j++)
+		{
+			if (exist[s[j]] != 1)
+			{
+				exist[s[j]] = 1;
+				count++;
+			}
+			else
+			{
+				for (k = 0; k < 256; k++)
+				{
+					exist[k] = 0;
+				}
+				break;
+			}
+		}
+		max = count > max ? count : max;
+	}
+	return max;
+}
+
+/*
+NO.4 Accepted Runtime:36 ms
+There are two sorted arrays nums1 and nums2 of size m and n respectively.
+
+Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+Example 1:
+nums1 = [1, 3]
+nums2 = [2]
+
+The median is 2.0
+
+
+Example 2:
+nums1 = [1, 2]
+nums2 = [3, 4]
+
+The median is (2 + 3)/2 = 2.5
+*/
+double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) {
+
 }
 
 #pragma endregion

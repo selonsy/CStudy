@@ -21,6 +21,7 @@ typedef Node *PNode;
 
 int* twoSum(int* nums, int numsSize, int target);
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2);
+int lengthOfLongestSubstring(char* s);
 
 #pragma endregion
 
