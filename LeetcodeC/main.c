@@ -1,4 +1,4 @@
-#include "head.h"
+ï»¿#include "head.h"
 
 int main()
 {
@@ -65,9 +65,9 @@ return [0, 1].
 */
 /**
 * Note: The returned array must be malloced, assume caller calls free().
-·µ»ØµÄÊı×é±ØĞë±»·ÖÅä£¬¼ÙÉèµ÷ÓÃÕß¸ºÔğÊÍ·Å
+è¿”å›çš„æ•°ç»„å¿…é¡»è¢«åˆ†é…ï¼Œå‡è®¾è°ƒç”¨è€…è´Ÿè´£é‡Šæ”¾
 
-µ÷ÓÃÊ¾Àı:
+è°ƒç”¨ç¤ºä¾‹:
 int nums[] = {2,7,11,15};
 int *p  = twoSum(nums, 4, 9);
 free(p);
@@ -211,9 +211,26 @@ double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Si
 
 #pragma endregion
 
+#pragma region è€ƒç ”å¤è¯•ä¸Šæœº
+/*
+è¾“å‡ºèºæ—‹æ•°ç»„:
+è¾“å‡ºä¸€ä¸ªæ•°å­—nï¼Œè¾“å‡ºné˜¶èºæ—‹æ•°ç»„ã€‚
+æ‰€è°“èºæ—‹å°±æ˜¯æŒ‡ä¸‹é¢ä¸¾å¾—è¿™ä¸ªä¾‹å­
+1Â  Â 2Â Â 3Â Â 4
+12  13 14 5
+11Â Â 16Â 15Â 6
+10Â  9Â  8Â  7
+*/
+void spiralArray(int n) 
+{
+
+}
+#pragma endregion
+
+
 #pragma region Lib
 
-//´´½¨Á´±í(»µµÄ)
+//åˆ›å»ºé“¾è¡¨(åçš„)
 int Create_List_Head(PNode h, ElementType data)
 {
 	if (h == NULL)
@@ -233,14 +250,14 @@ int Create_List_Head(PNode h, ElementType data)
 	return OK;
 }
 
-//Õ¹Ê¾Á´±í
+//å±•ç¤ºé“¾è¡¨
 void DisPlay(PNode h)
 {
 	if (h == NULL)
 	{
 		return;
 	}
-	PNode temp = h->next;  // Á´±íµÚÒ»¸ö½áµãÖ¸Õë  
+	PNode temp = h->next;  // é“¾è¡¨ç¬¬ä¸€ä¸ªç»“ç‚¹æŒ‡é’ˆ  
 	while (temp)
 	{
 		printf("%4d", temp->data);
@@ -250,7 +267,7 @@ void DisPlay(PNode h)
 	printf("\n");
 }
 
-//»ñÈ¡Êı×é³¤¶È
+//è·å–æ•°ç»„é•¿åº¦
 int Get_Length_Of_Array(int array[])
 {
 	int count = 0;
