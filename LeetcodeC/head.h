@@ -2,6 +2,7 @@
 #include "stdio.h" 
 #include <malloc.h>
 #include <time.h>
+#include<memory.h>
 #ifndef __HEAD_H__
 #define __HEAD_H__
 #define OK            0  
@@ -23,6 +24,8 @@ int* twoSum(int* nums, int numsSize, int target);
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2);
 int lengthOfLongestSubstring(char* s);
 void spiralArray(int n);
+void personalRate();
+void horseChess();
 #pragma endregion
 
 
