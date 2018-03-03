@@ -26,6 +26,7 @@ int lengthOfLongestSubstring(char* s);
 void spiralArray(int n);
 void personalRate();
 void horseChess();
+void horseChess1();
 #pragma endregion
 
 

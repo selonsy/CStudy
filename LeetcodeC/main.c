@@ -47,7 +47,7 @@ int main()
 
 	//spiralArray(3);
 	//personalRate();
-	horseChess();
+	horseChess1();
 
 	system("pause");
 	return 0;
@@ -282,100 +282,12 @@ void personalRate()
 ②对各个方向的出口进行二次出口（OUT2）的搜索。
 ③记录每个方向上出口（OUT1）的二次出口（OUT2），（OUT2）最小的的那个（OUT1）即为接下来要访问的位置。
 ④将每次访问过的位置放入容器。
-
-
-可能的变种题:
-设有下图所示的一个棋盘，在棋盘上的A点，有一个中国象棋的马，并约定马走的规则,从A点跳至B点。
-规则：1. 马走日字 2. 马只能向右走。找出从A跳到B的某一途径。
-1）编写一个函数，输入A点的x和 y值，按规则跳马至B点。
-2）在main函数中通过键盘输入x,y的初值，打印马跳过的轨迹和步数。
-3）采用递归的思路设计该函数。
 */
-
-typedef struct
-{
-	int x, y;
-}item;
-item move[4] = { { -2,1 },{ -1,2 },{ 1,2 },{ 2,1 } };
-int map[5][9], sx, sy;
-//判断是否在地图中，防止越界
-int checkIn(int x, int y)
-{
-	if (x >= 0 && x <= 4 && y >= 0 && y <= 8)
-		return 1;
-	return 0;
-}
-//输出最终结果
-void output()
-{
-	int i, j;
-	for (i = 0; i <= 4; i++)
-	{
-		for (j = 0; j <= 8; j++)
-			printf("%d ", map[i][j]);
-		putchar('\n');
-	}
-	printf("共计%d步。", map[0][8]);
-}
-//从x y开始寻找能否到达终点，能返回1，不能返回0，step表示当前的步数。
-int findPath(int x, int y, int step)
-{
-	int i;
-	map[x][y] = step;
-	//终点
-	if (x == 0 && y == 8)
-	{
-		output();
-		return 1;
-	}
-	//向右边4个方向前进
-	for (i = 0; i < 4; i++)
-		if (checkIn(x + move[i].x, y + move[i].y))
-			if (findPath(x + move[i].x, y + move[i].y, step + 1) == 1)
-				return 1;
-	//四个方向均无法到达终点，回溯并返回0
-	map[x][y] = 0;
-	return 0;
-}
-
-//棋盘尺寸
-#define X 8
-#define Y 8
-//B点坐标
-#define BX 1
-#define BY 8
-int pos[100];
-int idx = 0;
-int drt[4][2] = { { 2,1 },{ 1,2 },{ -1,2 },{ -2,1 } };
-int expand(int x, int y)
-{
-	int i, xn, yn;
-
-	if (x == BX && y == BY)
-		return 1;
-	if (x<0 || y<0 || x>X || y>Y)
-		return 0;
-
-	for (i = 0; i<4; i++)
-	{
-		xn = x + drt[i][0];
-		yn = y + drt[i][1];
-		pos[2 * idx] = xn;
-		pos[2 * idx + 1] = yn;
-		idx++;
-		if (expand(xn, yn))
-			return 1;
-		else
-			idx--;
-	}
-	return 0;
-}
-
 //棋盘数据：  
-const int WIDTH = 8;       //棋盘宽和高  （国际象棋）
+const int WIDTH = 8;       //棋盘宽和高(国际象棋)
 const int HEIGHT = 8;
 int board[8][8];  //棋盘数组保存数据为每个位置对应马的路线的第几步  
-//dir为马的八个方向  
+				  //dir为马的八个方向  
 const int dir[8][2] = { { -2,-1 },{ -2,1 },{ -1,2 },{ 1,2 },{ 2,1 },{ 2,-1 },{ 1,-2 },{ -1,-2 } };
 //求(i,j)位置的出口,并返回所有出口和对应的出口个数  
 int exitn(int i, int j, int s, int a[])
@@ -409,13 +321,48 @@ int next(int i, int j, int s)
 	}
 	return go;             //返回最少出口位置的方向索引  
 }
+void horseChess()
+{
+	int num, istartX, istartY;
+	while (1)
+	{
+		printf("Please input your number:");
+		scanf_s("%d", &num);
+		if (num <= WIDTH*HEIGHT && num >= 1)break;
+	}
+
+	istartX = num % 8 == 0 ? num / 8 - 1 : num / 8;		//起始横坐标
+	istartY = num % 8 == 0 ? 7 : (num % 8) - 1;			//起始纵坐标
+
+
+	int step, flag, start = 1;    //step表示第几步,flag标记下一步的方向，start表示方向索引的初始值  
+	memset(board, 0, sizeof(int)*WIDTH*HEIGHT);  //初始化棋盘，0表示没有走过
+	board[istartX][istartY] = 1;                 //起始位置的第一步，1表示第一步，N表示第N步  
+
+	printf("\n棋盘中的轨迹：（数字表示第几步，所在位置为棋盘位置）\n");
+	for (step = 2; step <= WIDTH*HEIGHT; step++)  //从第二步开始，直到走满整个棋盘  
+	{
+		if ((flag = next(istartX, istartY, start)) == -1) //返回-1，没有找到出口  
+			break;
+		istartX += dir[flag][0]; //下一步的起始坐标  
+		istartY += dir[flag][1];
+		board[istartX][istartY] = step; //保存当前步到棋盘作为标记  
+	}
+	int i, j;
+	for (i = 0; i<HEIGHT; i++) //输出棋盘保存的路径  
+	{
+		for (j = 0; j<WIDTH; j++)
+			printf("%5d", board[i][j]); //5格对齐  
+		printf("\n");
+	}
+}
 
 
 typedef struct chess {
 	int heng;
 	int shu;
 	struct chess* next;
-}Chess,*PChess;
+}Chess, *PChess;
 PChess reverse(PChess head) {
 	PChess p, q, pr;
 	p = head->next;
@@ -430,40 +377,53 @@ PChess reverse(PChess head) {
 	head->next = q;
 	return head;
 }
-void horseChess()
+
+/*
+可能的变种题:
+设有下图所示的一个棋盘，在棋盘上的A点，有一个中国象棋的马，并约定马走的规则,从A点跳至B点。
+规则：1. 马走日字 2. 马只能向右走。找出从A跳到B的某一途径。
+1）编写一个函数，输入A点的x和 y值，按规则跳马至B点。
+2）在main函数中通过键盘输入x,y的初值，打印马跳过的轨迹和步数。
+3）采用递归的思路设计该函数。
+*/
+//棋盘尺寸
+#define X 8
+#define Y 8
+//B点坐标
+#define BX 0
+#define BY 7
+int pos[100];
+int idx = 0;
+int drt[4][2] = { { 2,1 },{ 1,2 },{ -1,2 },{ -2,1 } };//仅允许向右侧跳
+int expand(int x, int y)
 {
-	int num;
-	int istartX, istartY;
-	printf("Please input your number:");
-	scanf_s("%d", &num);
-	
-	istartX = num % 8 == 0 ? num / 8 - 1 : num / 8;		//起始横坐标
-	istartY = num % 8 == 0 ? 7 : (num % 8) - 1;			//起始纵坐标
+	int i, xn, yn;
 
-	
-	int step, flag, start = 1;    //step表示第几步,flag标记下一步的方向，start表示方向索引的初始值  
-	memset(board, 0, sizeof(int)*WIDTH*HEIGHT);  //初始化棋盘，0表示没有走过//
-	board[istartX][istartY] = 1;                 //起始位置的第一步，1表示第一步，N表示第N步  
-	
-	printf("\n棋盘中的轨迹：（数字表示第几步，所在位置为棋盘位置）\n");	
-	for (step = 2; step <= WIDTH*HEIGHT; step++)  //从第二步开始，直到走满整个棋盘  
-	{
-		if ((flag = next(istartX, istartY, start)) == -1)      //返回-1，没有找到出口  
-			break;
-		istartX += dir[flag][0];                 //下一步的起始坐标  
-		istartY += dir[flag][1];
-		board[istartX][istartY] = step;                    //保存当前步到棋盘作为标记  
-	}
-	int i, j;
-	for (i = 0; i<HEIGHT; i++)                    //输出棋盘保存的路径  
-	{
-		for (j = 0; j<WIDTH; j++)
-			printf("%5d", board[i][j]);        //5格对齐  
-		printf("\n");
-	}
+	if (x == BX && y == BY)
+		return 1;
+	if (x<0 || y<0 || x>=X || y>=Y)
+		return 0;
 
-	/*int x, y, i, j;
-	int ary[X + 1][Y + 1];
+	for (i = 0; i<4; i++)
+	{
+		xn = x + drt[i][0];
+		yn = y + drt[i][1];
+		pos[2 * idx] = xn;
+		pos[2 * idx + 1] = yn;
+		idx++;
+		if (expand(xn, yn))
+			return 1;
+		else
+			idx--;
+	}
+	return 0;
+}
+void horseChess1()
+{
+	int x, y, i, j;
+	int ary[X][Y];
+
+	memset(ary, 0, sizeof(ary));
 
 	printf("请输入起始点(x,y)\n");
 	scanf_s("%d,%d", &x, &y);
@@ -473,14 +433,11 @@ void horseChess()
 
 	if (expand(x, y))
 	{
-		for (i = 0; i <= X; i++)
-			for (j = 0; j <= Y; j++)
-				ary[i][j] = 0;
-		for (i = 0; i<idx; i++)
+		for (i = 0; i < idx; i++)
 			ary[pos[2 * i]][pos[2 * i + 1]] = i + 1;
-		for (i = 0; i <= X; i++)
+		for (i = 0; i < X; i++)
 		{
-			for (j = 0; j <= Y; j++)
+			for (j = 0; j < Y; j++)
 				printf("%d ", ary[i][j]);
 			printf("\n");
 		}
@@ -490,13 +447,7 @@ void horseChess()
 	{
 		printf("不能从A到达B\n");
 	}
-	return;*/
 
-	/*memset(map, 0, sizeof(map));
-	printf("请输入起点<x,y>\n");
-	scanf_s("%d,%d", &sx, &sy);
-	findPath(sx, sy, 1);
-	return;*/
 
 	//int num, a[8][8], i, j, m, n, k = 0;
 	//printf("Please input your number:");
@@ -601,6 +552,7 @@ void horseChess()
 	//}
 	//printf("total is %d",k);
 }
+
 
 
 /*
