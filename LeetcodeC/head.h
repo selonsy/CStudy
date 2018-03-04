@@ -3,6 +3,7 @@
 #include <malloc.h>
 #include <time.h>
 #include<memory.h>
+#include<math.h>
 #ifndef __HEAD_H__
 #define __HEAD_H__
 #define OK            0  
@@ -27,6 +28,10 @@ void spiralArray(int n);
 void personalRate();
 void horseChess();
 void horseChess1();
+void nlr();
+void nlr1();
+void bracketsMatch();
+void primeNumber();
 #pragma endregion
 
 

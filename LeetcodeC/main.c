@@ -47,7 +47,13 @@ int main()
 
 	//spiralArray(3);
 	//personalRate();
-	horseChess1();
+	//horseChess1();
+
+	//nlr1();
+
+	//bracketsMatch();
+
+	primeNumber();
 
 	system("pause");
 	return 0;
@@ -218,6 +224,8 @@ double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Si
 
 #pragma region 考研复试上机
 
+#pragma region 个人所得税计算问题
+
 /*
 1.计算税率，题目给出了工资salary和保险insurance，根据工资加保险的大小范围不同，所缴纳的税率不同，根据题目要求输出需要交纳的税率.
 
@@ -258,6 +266,10 @@ void personalRate()
 
 	printf("you need to pay %.2f,the rate is %.2f\%", money_pay, (money_pay / money) * 100);
 }
+
+#pragma endregion
+
+#pragma region 象棋马走日遍历问题
 
 
 /*
@@ -401,7 +413,7 @@ int expand(int x, int y)
 
 	if (x == BX && y == BY)
 		return 1;
-	if (x<0 || y<0 || x>=X || y>=Y)
+	if (x<0 || y<0 || x >= X || y >= Y)
 		return 0;
 
 	for (i = 0; i<4; i++)
@@ -554,6 +566,10 @@ void horseChess1()
 }
 
 
+#pragma endregion
+
+#pragma region 螺旋数组问题
+
 
 /*
 3.输出螺旋数组:
@@ -569,7 +585,7 @@ Using Two-Dimensional array
 void spiralArray(int num)
 {
 	int a[20][20], count, i, j, k, kend, lend;
-	
+
 	kend = num / 2;//轮数,也即圈数
 	lend = num;
 	count = 1;
@@ -614,28 +630,28 @@ void spiralArray1(int num)
 	count = 1;
 	for (i = 0, j = 0, k = 0; k<kend; k++)
 	{
-		a[i*num + j] = count++;
+	a[i*num + j] = count++;
 
-		for (j++; j<lend; j++)
-			a[i*num + j] = count++;
+	for (j++; j<lend; j++)
+	a[i*num + j] = count++;
 
-		for (i++, j--; i<lend; i++)
-			a[i*num + j] = count++;
+	for (i++, j--; i<lend; i++)
+	a[i*num + j] = count++;
 
-		for (i--, j--; j >= k; j--)
-			a[i*num + j] = count++;
+	for (i--, j--; j >= k; j--)
+	a[i*num + j] = count++;
 
-		for (i--, j++; i>k; i--)
-			a[i*num + j] = count++;
+	for (i--, j++; i>k; i--)
+	a[i*num + j] = count++;
 
-		i++; j++; lend--;
+	i++; j++; lend--;
 	}
 	if (num % 2 != 0) a[i*num + j] = count;
 	for (i = 0; i<num; i++)
 	{
-		for (j = 0; j<num; j++)
-			printf("%4d ", a[i*num + j]);
-		printf("\n");
+	for (j = 0; j<num; j++)
+	printf("%4d ", a[i*num + j]);
+	printf("\n");
 	}
 	delete[]a;*/
 }
@@ -688,6 +704,256 @@ void spiralArray2(int num)
 	//}
 	//delete[]a;
 }
+
+#pragma endregion
+
+#pragma region 前中后序遍历问题
+
+//(可以考虑其他类型的遍历问题)
+//比如:已知后序遍历和中序遍历,求出前序遍历.
+
+/*
+4.已知二叉树的前序遍历和中序遍历，如何得到它的后序遍历
+N->根节点
+L->左子树
+R->右子树
+前序遍历    N－>L－>R
+中序遍历    L－>N－>R
+后序遍历    L－>R－>N
+
+要完成这个任务，我们首先要利用以下几个特性：
+特性A，对于前序遍历，第一个肯定是根节点；
+特性B，对于后序遍历，最后一个肯定是根节点；
+特性C，利用前序或后序遍历，确定根节点，在中序遍历中，根节点的两边就可以分出左子树和右子树；
+特性D，对左子树和右子树分别做前面3点的分析和拆分，相当于做递归，我们就可以重建出完整的二叉树；
+
+我们以一个例子做一下这个过程，假设：
+前序遍历的顺序是: CABGHEDF
+中序遍历的顺序是: GHBACDEF
+第一步，我们根据特性A，可以得知根节点是C，然后，根据特性C，我们知道左子树是：GHBA，右子树是：DEF。
+	C
+   / \
+GHBA  DEF
+第二步，取出左子树，左子树的前序遍历是：ABGH，中序遍历是：GHBA，根据特性A和C，得出左子树的父节点是A，并且A没有右子树。
+	C
+   / \
+  A   DEF
+ /
+GBH
+第三步，使用同样的方法，前序是BGH，中序是GHB，得出父节点是B，GH是B节点的左子树，并且B没有右子树。
+第四步，使用同样的方法，前序是GH，中序是GH，得出父节点是G，H为G的右子树，并且没有左子树。
+	  C
+     / \
+    A   DEF
+   /
+  B
+ /    
+G  
+ \
+  H
+第五步，回到右子树，它的前序是EDF，中序是DEF，依然根据特性A和C，得出父节点是E，左右节点是D和F。
+		C
+	   / \
+      A   E
+     /   / \
+    B   D   F
+   /
+  G
+   \
+    H
+到此，我们得到了这棵完整的二叉树，因此，它的后序遍历就是：HGBADFEC。
+*/
+
+#define N 100
+char pre[N], in[N], res[N];
+void Find_Last(int p1, int p2, int q1, int q2, int root)
+{
+	if (p1 > p2) return;
+	for (root = q1; in[root] != pre[p1]; ++root);
+	Find_Last(p1 + 1, p1 + root - q1, q1, root - 1, 0);
+	Find_Last(p1 + root + 1 - q1, p2, root + 1, q2, 0);
+	printf("%c", in[root]);
+}
+void Find_Last1(int n, char* pre, char* in, char* res)//递归构造,输入先序遍历，中序遍历，求后序遍历  
+{
+	if (n <= 0) return;
+	int p = strchr(in, pre[0]) - in;//找到根节点在中序遍历的位置  
+	Find_Last1(p, pre + 1, in, res);//递归构造左子树的后序遍历  
+	Find_Last1(n - p - 1, pre + p + 1, in + p + 1, res + p);//递归构造右子树的后序遍历  
+	res[n - 1] = pre[0];//添加根节点到最后面  
+}
+void nlr()
+{
+	while (scanf("%s%s", pre, in) == 2)
+	{
+		int len = strlen(pre) - 1;
+		Find_Last(0, len, 0, len, 0);
+		puts("");
+	}
+	return;
+}
+void nlr1()//this one is better.
+{
+	while (scanf("%s%s", pre, in) == 2)
+	{
+		int n = strlen(in);
+		Find_Last1(n, pre, in, res);
+		res[n] = '\0';	//字符串以\0结尾
+		printf("%s\n", res);
+	} return 0;
+}
+
+#pragma endregion
+
+#pragma region 括号匹配问题
+
+/*
+5.括号匹配，就是数据结构中的内容，大家应该都知道，这次只不过要你编程实现.
+
+分析如下:
+1.遇到[和(直接压入栈.
+2.遇到]和)则从栈顶往下尝试匹配,遇到第一个[和(就表示匹配成功,栈顶指针下移.如果一直到栈底都没匹配到,则直接跳出循环,返回失败.
+*/
+
+int MatchCheck(char a[], int len) {
+	int flag = 0;
+	char s[10000];
+	int top, i;
+	char temp;
+	// 初始化一个栈
+	top = 0;
+	for (i = 0; i<len; i++) {
+		if (a[i] == '[') { // 如果是左括号直接入栈
+			s[++top] = a[i];
+			continue;
+		}
+		if (a[i] == ']') { // 如果是右括号，则尝试匹配
+			temp = s[top];
+			if (temp == '[') {
+				flag = 1;
+				top--;
+				continue;
+			}
+			else {
+				flag = 0;
+				break;
+			}
+		}
+
+		if (a[i] == '(') { // 如果是左括号直接入栈
+			s[++top] = a[i];
+			continue;
+		}
+		if (a[i] == ')') { // 如果是右括号，则尝试匹配
+			temp = s[top];
+			if (temp == '(') {
+				flag = 1;
+				top--;
+				continue;
+			}
+			else {
+				flag = 0;
+				break;
+			}
+		}
+	}
+	if (flag && (top == 0)) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+
+}
+void bracketsMatch()
+{
+	int result;
+	char a[100];
+	scanf("%s", &a);
+	result = MatchCheck(a, strlen(a));
+	if (result)printf("match success!\n");
+	else printf("failed!\n");
+	return;
+}
+
+#pragma endregion
+
+#pragma region 互素问题
+
+/*
+题目:还有一个是，素数对，给一组数据，问其中互素的元素最多有多少。
+
+互素,又称互质,最早是初等数论中的概念：
+若n个整数a1,a2,…,an的最大公因数为1,就称这n个整数互素．
+
+素数(质数)定义为在大于1的自然数中，除了1和它本身以外不再有其他因数。
+
+*/
+int isPrimeNumber(int num)
+{
+	int i, k = (int)sqrt(num);
+	for (i = 2; i <= k; i++)
+		if (num%i == 0)
+			break;
+	if (i > k)return 1;
+	//printf("%d 是素数。\n", num);
+	else return 0;
+	//printf("%d 不是素数。\n", num);
+}
+void primeNumber()
+{
+	int max = 100;
+
+	int i;
+	int m, n;
+	for (m = 2; m <= max; m++)
+	{
+		//isPrimeNumber(m);
+		/*for (n = 2; n<m; n++)
+		{
+			if (m%n == 0)
+				break;
+		}
+		if (m == n)
+			printf("%d  ", m);*/
+		if(isPrimeNumber(m))printf("%4d", m);
+	}
+	return 0;	
+}
+
+#pragma endregion
+
+#pragma region 拓扑排序问题
+
+/*
+考查拓扑排序，给几组数据，比如给1 3，表示3必须排在1后边，大概这个意思吧，然后给出一个序列，问这个序列是否构成拓扑排序
+*/
+
+#pragma endregion
+
+#pragma region 字符串最大距离问题
+
+/*
+还有一个是给一个字符串，求出字符串中不同字符相差的最大距离。
+*/
+#pragma endregion
+
+#pragma region 迷宫问题
+
+/*
+还有一道我不是很确定，应该是一个迷宫问题吧，就是用深度优先和广度优先搜索的那种，我不是很确定是不是这个
+*/
+
+#pragma endregion
+
+#pragma region 大小堆问题
+
+/*
+请判断所给序列是不是堆，如果是，请输出是大顶堆还是小顶堆
+*/
+
+#pragma endregion
+
 #pragma endregion
 
 
