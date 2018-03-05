@@ -2,8 +2,8 @@
 #include "stdio.h" 
 #include <malloc.h>
 #include <time.h>
-#include<memory.h>
-#include<math.h>
+#include <memory.h>
+#include <math.h>
 #ifndef __HEAD_H__
 #define __HEAD_H__
 #define OK            0  

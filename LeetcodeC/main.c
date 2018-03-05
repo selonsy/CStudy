@@ -1,66 +1,5 @@
 ﻿#include "head.h"
 
-int main()
-{
-
-	////NO.1
-	//int nums[] = { 2,7,11,15 };
-	//int *p = twoSum(nums, 4, 9);
-	//printf("[%d,%d]",p[0],p[1]);
-
-	////NO.2	
-	//int nums1[] = { 5 };// { 2,4,3 };
-	//int nums2[] = { 5 };// { 5,6,4 };
-	//PNode head_node1 = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//PNode head_node2 = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//PNode node_1,node_2;
-	//node_1 = head_node1;
-	//node_2 = head_node2;
-	//head_node1->data = nums1[0];
-	//head_node1->next = NULL;	
-	//head_node2->data = nums2[0];
-	//head_node2->next = NULL;
-	//for (int i = 1; i < sizeof(nums1)/sizeof(int); i++)
-	//{
-	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//	node_t->data = nums1[i];		
-	//	node_1->next = node_t;
-	//	node_1 = node_t;
-	//}
-	//for (int i = 1; i < sizeof(nums2) / sizeof(int); i++)
-	//{
-	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//	node_t->data = nums2[i];
-	//	node_2->next = node_t;
-	//	node_2 = node_t;
-	//}
-	//node_1->next = NULL;
-	//node_2->next = NULL;
-	//	
-	//PNode result = addTwoNumbers(head_node1, head_node2);	
-	//DisPlay(result);
-
-	//NO.3
-	//char* s = "shenjinlong";
-	//int max = lengthOfLongestSubstring(s);
-	//printf("the length of max_substring is %d", max);
-
-	//spiralArray(3);
-	//personalRate();
-	//horseChess1();
-
-	//nlr1();
-
-	//bracketsMatch();
-
-	primeNumber();
-
-	system("pause");
-	return 0;
-
-	return 0;
-}
-
 #pragma region Leetcode
 
 /*
@@ -956,6 +895,60 @@ void primeNumber()
 
 #pragma endregion
 
+#pragma region 普通算法题
+
+/*
+1.求最长公共子串
+题目:给定两个字符串A和B，同时给定两串的长度n和m。
+要求:时间复杂度为O(m*n)的算法(这里的m和n为两串的长度).
+样例：给定两个字符串A和B，同时给定两串的长度n和m。
+输入:"1AB2345CD",9,"12345EF",7
+返回：4
+
+分析:
+首先，所求是最大子串，不是子序列，说明是连续的。
+LS问题，用动态规划思想，把大问题分解成若干小问题，用矩阵记录状态结果：
+若s是两个字符串s1和s2敏感词有的字符，s1中s左侧的字符串为s1'，s2中s左侧的字符串为s2'，那么截止到s为止，LS(s1, s2) = LS(s1', s2')+1，用矩阵记录结果，例如bab和c aba，矩阵如下：
+	b	a	b
+c	0	0	0
+a	0	1	0
+b	1	0	2
+a	0	2	0
+我们用全局变量max记录最大值，同时可以记录最后一次+1时的行号或列号，结合max可以推算出子串。
+*/
+void maxSubstring()
+{
+	char A[50], B[50];
+	int n, m;
+	int max = 0;
+	printf("Please input your string and length:");
+	scanf("%s%d%s%d", A, &n, B, &m);
+
+	if (n == 0 || m == 0) {
+		max = 0;
+	}
+
+	int matrix[10][10];//吐槽下这个大小非要常量值
+	memset(matrix, 0, sizeof(matrix));
+
+
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < m; j++) {
+			if (A[i] == B[j]) {
+				if (i == 0 || j == 0) {
+					matrix[i][j] = 1;
+				}
+				else {
+					matrix[i][j] = matrix[i - 1][j - 1] + 1;
+				}
+				max = (max > matrix[i][j] ? max : matrix[i][j]);
+			}
+		}
+	}
+	printf("The max length is %d", max);
+}
+
+#pragma endregion
 
 #pragma region Lib
 
@@ -1010,3 +1003,58 @@ int Get_Length_Of_Array(int array[])
 
 #pragma endregion
 
+int main()
+{
+
+	maxSubstring();
+
+	system("pause");
+
+	return 0;
+
+	////NO.1
+	//int nums[] = { 2,7,11,15 };
+	//int *p = twoSum(nums, 4, 9);
+	//printf("[%d,%d]",p[0],p[1]);
+	////NO.2	
+	//int nums1[] = { 5 };// { 2,4,3 };
+	//int nums2[] = { 5 };// { 5,6,4 };
+	//PNode head_node1 = (PNode)malloc(sizeof(Node) / sizeof(char));
+	//PNode head_node2 = (PNode)malloc(sizeof(Node) / sizeof(char));
+	//PNode node_1,node_2;
+	//node_1 = head_node1;
+	//node_2 = head_node2;
+	//head_node1->data = nums1[0];
+	//head_node1->next = NULL;	
+	//head_node2->data = nums2[0];
+	//head_node2->next = NULL;
+	//for (int i = 1; i < sizeof(nums1)/sizeof(int); i++)
+	//{
+	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
+	//	node_t->data = nums1[i];		
+	//	node_1->next = node_t;
+	//	node_1 = node_t;
+	//}
+	//for (int i = 1; i < sizeof(nums2) / sizeof(int); i++)
+	//{
+	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
+	//	node_t->data = nums2[i];
+	//	node_2->next = node_t;
+	//	node_2 = node_t;
+	//}
+	//node_1->next = NULL;
+	//node_2->next = NULL;
+	//	
+	//PNode result = addTwoNumbers(head_node1, head_node2);	
+	//DisPlay(result);
+	//NO.3
+	//char* s = "shenjinlong";
+	//int max = lengthOfLongestSubstring(s);
+	//printf("the length of max_substring is %d", max);
+	//spiralArray(3);
+	//personalRate();
+	//horseChess1();
+	//nlr1();
+	//bracketsMatch();
+	//primeNumber();	
+}
