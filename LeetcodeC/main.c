@@ -897,6 +897,7 @@ void primeNumber()
 
 #pragma region 普通算法题
 
+//求最长公共子串
 /*
 1.求最长公共子串
 题目:给定两个字符串A和B，同时给定两串的长度n和m。
@@ -948,6 +949,7 @@ void maxSubstring()
 	printf("The max length is %d", max);
 }
 
+//正整数分解质因数
 /*
 2.实现一个正整数分解质因数的功能.
 例如：输入90,打印出90=2*3*3*5。
@@ -974,6 +976,7 @@ void integerDecompose()
 	printf("%d", m);
 }
 
+//多项式相乘
 /*
 3.多项式的乘法
 exp: 
@@ -1134,7 +1137,6 @@ int InverseList(listnode *head)	//逆置链表
 	}
 	return 0;
 }
-
 void duo_xiang_shi_cheng()
 {
 	printf("  链表实现多项式的乘法   \n");
@@ -1188,6 +1190,30 @@ void duo_xiang_shi_cheng()
 	return 0;
 }
 
+//求平面坐标距离
+/*
+给定平面十个点的坐标，求相互距离中的最小值
+*/
+typedef struct vector 
+{
+	int v;//纵坐标
+	int h;//横坐标
+}Vector;
+void minDistanceOfPlane()
+{
+	Vector arr[10] = { {1,1},{2,2},{3,3},{4,4},{5,5}, {1,5},{2,6},{3,7},{4,8},{5,9} };	
+	int i, j;
+	float min=100;
+	for ( i = 0; i < 10; i++)
+	{
+		for (j = i+1; j < 10; j++)
+		{
+			float x =sqrt(pow((arr[i].h - arr[j].h),2)+pow((arr[i].v-arr[j].v),2));
+			min = x < min ? x : min;
+		}
+	}
+	printf("The min distance is %.2f\n", min);
+}
 
 #pragma endregion
 
@@ -1246,7 +1272,8 @@ int Get_Length_Of_Array(int array[])
 
 int main()
 {
-	duo_xiang_shi_cheng();
+	minDistanceOfPlane();
+	//duo_xiang_shi_cheng();
 	//integerDecompose();
 	//maxSubstring();
 
