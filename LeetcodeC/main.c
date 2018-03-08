@@ -1215,6 +1215,349 @@ void minDistanceOfPlane()
 	printf("The min distance is %.2f\n", min);
 }
 
+//轮流挑石头问题
+/*
+Description
+有一堆石头，数量为n，鑫胖和dalao两个人轮流拿石头，每次能选择拿一块或两块石头。dalao先手。游戏规则为谁拿了最后一块石头，则谁赢。 假设鑫胖和dalao都很聪明，IQ=250，每次都能做出最佳的选择。 例如，有1-2块石头，则先手的dalao获胜。(直接拿所有石头) 如果有3块石头，则鑫胖获胜。(不管dalao拿几块，鑫胖都能直接拿剩下的石头)
+Input
+输入的第一行为t，表示t组数据 接下来t行，每行输入一个n，表示有n块石头。
+Output
+输出谁赢 eg： xinpang win! dalao win!
+Simple Input
+2 2 3
+Somple Output
+dalao win!
+dalao win!
+xinpang win!
+
+分析:谁面临只剩下三个的情况,谁就输了.
+*/
+void pickStone()
+{
+	int a, b;
+	scanf("%d", &a);
+
+	while (a--)
+	{
+		scanf("%d", &b);
+		if (b % 3 != 0)
+		{
+			printf("dalao win!\n");
+		}
+		else
+		{
+			printf("xinpang win!\n");
+		}
+	}
+}
+
+//求最大公约数和最小公倍数
+/*
+Description
+Give you two integers, and calculate their GCD(Greatest Common Divisor) and LCM(Least Common Multiple). If both of them are positive, print the GCD and LCM. If some are invalid(zero or negative), print invalid.
+Sample Input 1
+2 10
+Sample Output 1
+2 10
+Sample Input 2
+14 0
+Sample Output 2
+invalid
+*/
+int gcd(int a, int b)
+{
+	if (b  == 0)
+	{
+		return a;
+	}
+	else
+	{
+		return gcd(b, a%b);//递归
+	}
+}
+int lcm(int a, int b)
+{
+	return a / gcd(a, b)*b;//两数积除以两数最大公约数
+}
+void gcd_lcm()
+{
+	int a, b;
+	scanf("%d%d",&a,&b);
+	if (a > 0 && b > 0)
+		printf("%d %d\n", gcd(a, b), lcm(a, b));
+	else
+		printf("Invalid\n");
+}
+
+//指令移动小球
+/*
+题目描述
+你有一些小球，从左到右依次编号为1,2,3,...,n. 你可以执行两种指令（1或者2）。其中， 1 X Y表示把小球X移动到小球Y的左边， 2 X Y表示把小球X移动到小球Y右边。 指令保证合法，即X不等于Y。 例如，初始状态1,2,3,4,5,6的小球执行1 1 4后，小球1被移动到小球4的左边，即2,3,1,4,5,6。如果再执行2 3 5，结点3将会移到5的右边，即2,1,4,5,3,6。
+输入格式
+第一行为一个整数t（0<t<10），表示测试用例个数。每个测试用例的第一行为两个整数n（1<n<=500000）和m（0<m<100000），n表示小球的个数，m为指令条数，以下m行每行为一条指令。
+输出格式
+为每个测试用例单独输出一行，从左到右输出最后序列，每个数字后面跟一个空格。
+样例输入
+2
+6 2
+1 1 4
+2 3 5
+5 1
+2 1 5
+样例输出
+2 1 4 5 3 6
+2 3 4 5 1
+*/
+typedef struct ball_node
+{
+	int num;
+	struct ball_node * next;
+}BallNode;
+BallNode * create_list(int num)
+{
+
+}
+void move_ball(int* nums,int type, int obj, int des,int ball_num)
+{
+	int i;
+	if (1 == type)
+	{
+		for (i = obj; i < des - 1; i++)
+		{
+			nums[i - 1] = nums[i];
+		}
+		nums[des - 2] = obj;
+	}
+	else if (2 == type)
+	{
+		for (i = obj; i < des; i++)
+		{
+			nums[i - 1] = nums[i];
+		}
+		nums[des - 1] = obj;
+	}
+	for (i = 0; i < ball_num; i++)
+	{
+		printf("%d ", nums[i]);
+	}
+	printf("\n");
+}
+void moveBallByOrder()
+{
+	int sample_num, ball_num, order_num;
+	int order_type, obj, des;
+	int i;
+	scanf("%d",&sample_num);
+	while (sample_num--)//常用来处理循环输入
+	{
+		scanf("%d%d",&ball_num,&order_num);
+		int * nums = (int*)malloc(sizeof(int)*ball_num);
+		for ( i = 0; i < ball_num; i++)
+		{
+			nums[i] = i + 1;
+		}
+		while (order_num--)
+		{
+			scanf("%d%d%d", &order_type, &obj, &des);
+			move_ball(nums, order_type, obj, des, ball_num);
+		}
+	}
+}
+
+//丢扑克牌游戏
+/*
+题目描述
+桌上有一叠牌，从第一张牌（即位于顶面的牌）开始从上往下依次编号为1~n。当至少还剩两张牌时进行以下操作：把第一张牌扔掉，然后把新的第一张放到整叠牌的最后。输入n,输出每次扔掉的牌，以及最后剩下的牌。
+输入格式
+第一行为一个整数t（0<t<40），表示测试用例个数。以下t行每行包含一个整数n（0<n<40），为一个测试用例的牌数。
+输出格式
+为每个测试用例单独输出一行，该行中依次输出每次扔掉的牌以及最后剩下的牌，每张牌后跟着一个空格。
+样例输入
+2
+7
+4
+样例输出
+1 3 5 7 4 2 6
+1 3 2 4
+*/
+int a[100];
+void left_move(int n)
+{
+	int i;
+	for (i = 0; i<n - 1; i++)
+	{
+		a[i] = a[i + 1];
+	}
+	a[n - 1] = a[0];
+	for (i = 0; i<n - 1; i++)
+	{
+		a[i] = a[i + 1];
+	}
+}
+void init(int n)
+{
+	int i;
+	for (i = 0; i<n; i++)
+	{
+		a[i] = i + 1;
+	}
+}
+void thorwPoker()
+{	
+	#if 0
+		freopen("input", "r", stdin);
+		freopen("output", "w", stdout);
+	#endif
+
+	int n, count, m;
+	scanf("%d", &n);
+	while (n--)
+	{
+		scanf("%d", &m);
+		init(40);
+		count  = m;
+		while (count  != 1)
+		{
+			printf("%d ", a[0]);
+			left_move(count); //类似于数组左移
+			count--;
+		}
+		printf("%d \n", a[0]);//输出最后一张牌
+	}	
+}
+
+//猴子选大王
+/*
+题目描述
+猴子选大王，有N只猴子，从1～N进行编号。它们按照编号的顺时针方向，排成一个圆圈，然后从第一只猴子开始报数。第一只猴子报1，以后每只猴子报的数字都是它前面猴子所报数字加1。如果一只猴子报的数字是M，则该猴子出列，下一只猴子重新从1开始报数。剩下的猴子继续排成一个圆圈报数，直到全部的猴子都出列为止。最后一个出列的猴子胜出。
+输入格式
+The first line is an integer t, indicating the number of test cases. Then there are t lines and each line contains two positive integer N(0<N<=100) and M(0<M<=100).
+输出格式
+For each test case, print out the number of the Monkey King.
+样例输入
+2
+5 2
+4 3
+样例输出
+3
+1
+*/
+void pickMonkeyKing()
+{
+	int t, i, count, s, m, n;
+	scanf("%d", &t);
+	while (t--)
+	{
+		scanf("%d %d", &n, &m);
+		int * nums = (int*)malloc(sizeof(int)*n);//动态声明数组
+		memset(nums, 1, sizeof(int)*n);//批处理为1
+		count  = n;
+		s  = 1;
+		while (count  != 1)
+		{
+			for (i = 1; i <= n; i++)
+			{
+				if (!nums[i]) continue;//遇到0的就跳过
+
+				if (s == m)//等于目标值,将其置0,s重新计算
+				{
+					nums[i] = 0;
+					count--;
+					s  = 0;
+				}
+				s++;
+			}
+
+		}
+		for (i = 1; i <= n; i++)
+		{
+			if (nums[i])
+			{
+				break;
+			}
+		}
+		printf("%d\n", i);
+	}
+}
+
+//求日期为当年第几天
+/*
+Description
+已知当前日期，请计算这是这一年的第几天。例如2012年12月31日是2012年的第366天（2012是闰年）。 提示：四年一闰，百年不闰，四百年再闰，即能整除4且不能整除100的年为闰年（2004年就是闰年,1900年不是闰年）；世纪年能整除400的是闰年（2000年是闰年，1900年不是闰年）。
+Input
+分别输入年Y，月M，日D，以整数形式输入，其中1900<=Y<=3000，1<=M<=12，1<=D<=31，三个整数之间用空格隔开。
+Output
+输出一个整数N，表示当前是一年中的第几天，末尾有一个换行符
+Sample Input
+2012 12 1
+Sample Output
+336
+*/
+char month_day[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+int is_leap_year(int y)
+{
+	if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+	{
+		return 1;
+	}
+
+	return 0;
+}
+void countDaysOfYear()
+{
+	int year, month, day, i, sum;
+	//循环从输入流读取值，直到遇到EOF为止，等同于while(scanf("%d %d %d", &year, &month, &day)!=EOF)。
+	while (~scanf("%d,%d,%d", &year, &month, &day))
+	{
+		sum = 0;
+		for (i = 1; i<month; i++)
+		{
+			sum += month_day[i];
+		}
+
+		sum += day;
+
+		if (month>2 && is_leap_year(year))
+		{
+			sum++;
+		}
+		printf("%d\n", sum);
+	}
+}
+
+//输出所有的完数
+/*
+Description:
+编写程序，输入一个正整数M，输出[1,M]内的所有“完数”。每输出一个数（包括最后一个数）均以换行结束。
+所谓“完数”，是指一个数恰好等于它的因子值（因子不包括该数本身）之和。例如6是完数，因为6=1+2+3。
+Sample Input:
+100
+Sample Output:
+6 
+28
+*/
+void outputWanShu()
+{
+	int m;
+	scanf("%d", &m);
+	int temp = 0, i, j;
+	for (i = 1; i <= m; i++)
+	{
+		for (j = 1; j <= i/2; j++)
+		{
+			if (i%j == 0)
+			{
+				temp += j;
+			}
+		}
+		if (temp == i)
+		{
+			printf("%d\n", i);			
+		}
+		temp = 0;
+	}
+}
+
 #pragma endregion
 
 #pragma region Lib
@@ -1272,7 +1615,14 @@ int Get_Length_Of_Array(int array[])
 
 int main()
 {
-	minDistanceOfPlane();
+	outputWanShu();
+	//countDaysOfYear();
+	//pickMonkeyKing();
+	//thorwPoker();
+	//moveBallByOrder();
+	//gcd_lcm();
+	//pickStone();
+	//minDistanceOfPlane();
 	//duo_xiang_shi_cheng();
 	//integerDecompose();
 	//maxSubstring();
