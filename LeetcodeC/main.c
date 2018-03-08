@@ -1558,6 +1558,30 @@ void outputWanShu()
 	}
 }
 
+//砝码称重问题
+/*
+递归函数IsMeasurable(int target, int weights[], int nWeights)，填空题。给定n个砝码，然后再给定指定重量，看是否能用这几个砝码就能确定这个重量
+比如，给定砝码分别，1KG 3KG， 那么通过这两个砝码，我们能准确称量1KG 2KG 3KG 4KG的物品。（2KG物品称量的方法就是把1KG的砝码放到和物品一起，然后等于3KG的砝码）
+*/
+int IsMeasurable(int target, int weights[], int nWeights)
+{
+
+	if (nWeights == 0)
+	{
+		if (target == 0) return 1;
+		else return 0;
+	}
+	int a = IsMeasurable(target - weights[nWeights - 1], weights, nWeights - 1);
+	int b = IsMeasurable(target, weights, nWeights - 1);
+	int c = IsMeasurable(target + weights[nWeights - 1], weights, nWeights - 1);
+	return (a || b || c);
+}
+void measureByWeight()
+{
+	int weights[] = { 1,3,5,7,9 };
+	int nWeights = 5;
+	printf("%d\n", IsMeasurable(20, weights, nWeights));
+}
 #pragma endregion
 
 #pragma region Lib
@@ -1615,7 +1639,8 @@ int Get_Length_Of_Array(int array[])
 
 int main()
 {
-	outputWanShu();
+	measureByWeight();
+	//outputWanShu();
 	//countDaysOfYear();
 	//pickMonkeyKing();
 	//thorwPoker();
