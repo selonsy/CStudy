@@ -1582,6 +1582,36 @@ void measureByWeight()
 	int nWeights = 5;
 	printf("%d\n", IsMeasurable(20, weights, nWeights));
 }
+
+//统计字符数量问题
+/*
+编程题，编一个子程序，接收三个数组，前两个char型，后一个int型，第二个初始化为字母表，并统计第一个数组上限为1000的字符中各字母出现的频率，记录在第三个数组的对应项中。
+题目中主程序给的数组都是没有赋值的，要自己赋值，然后……记得大小写字母都要统计啊
+*/
+int* _countChars(char des[], char ori[], int num[])
+{
+	int i;
+	for (i = 0; des[i] != NULL; i++)
+	{
+		num[des[i]]++;
+	}
+	return num;
+}
+void countChars()
+{
+	int i, num[100];
+	char des[1000];
+	printf("Please input your chars:\n");
+	scanf("%s", des);
+	memset(num, 0, sizeof(num));
+	int* p = _countChars(des, des, num);//接收返回数组的首地址
+	for (i = 0; i < 100; i++)
+	{
+		if (*(p + i) != 0)
+			printf("%c:%d\n", i, *(p + i));
+	}
+}
+
 #pragma endregion
 
 #pragma region Lib
@@ -1639,7 +1669,8 @@ int Get_Length_Of_Array(int array[])
 
 int main()
 {
-	measureByWeight();
+	countChars();
+	//measureByWeight();
 	//outputWanShu();
 	//countDaysOfYear();
 	//pickMonkeyKing();

@@ -5,6 +5,51 @@
 #include <stdlib.h>
 void c_test_for_study();
 
+int num = 100;
+void fun1()
+{
+	static int num1 = 100;
+	num1 -= 2;
+	num--;
+	printf("%d\t%d\n", num1, num);
+}
+void fun2()
+{
+	static int num2 = 100;
+	num2 -= 2;
+	num--;
+	printf("%d\t%d\n", num2, num);
+}
+void removeCharsOfString()
+{
+	int i,j=0;
+	char str[] = "as6789dhf67f65d";
+	char out[100];
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (str[i] - '0' >= 10 || str[i] - '0' < 0)
+		{
+			//char tep[2] = { str[i] };
+			out[j++] = str[i];
+			//out += str[i]; 地址相加a值0x61
+			//strcat(out, tep);
+		}
+	}
+	out[j] = '\0';
+	puts(out);
+}
+void test() {
+	int a[] = { 1, 2, 3 };
+	int i = 0;
+	for (; i < 3; i++)
+	{
+		if (a[i] % 2 == 1)
+			fun1();
+		else
+			fun2();
+	}
+}
+
 void fn1()
 {
 	extern int x;
@@ -169,7 +214,9 @@ void file_read_write1()
 
 int main() 
 {
-	file_read_write1();
+	removeCharsOfString();
+	//test();
+	//file_read_write1();
 	//file_read_write();
 
 	system("pause");
