@@ -1612,6 +1612,103 @@ void countChars()
 	}
 }
 
+
+//字母数字排序问题
+/*
+设计一个函数，输入一个字符串，将该字符中的数字排在左边，字母排在右边。
+*/
+void changeStrNumOrder(char * str)
+{
+	int len = strlen(str);//strlen不计算\0的长度
+	int i, j = len - 1;
+	char temp;
+	for (i = 0; i < len-1&&i<j; i++)
+	{
+		if (str[i] >= 48 && str[i] <= 67)
+		{
+		}
+		else if ((str[i] >= 65 && str[i] <= 90) || (str[i] >= 97 && str[i] <= 122))
+		{
+			temp = str[j];
+			str[j] = str[i];
+			str[i] = temp;
+			i--;
+			j--;
+		}
+	}
+	puts(str);
+}
+void test_changeStrNumOrder()
+{
+	char str[] = "asd546djch789dgt";
+	changeStrNumOrder(str);
+}
+
+//冒泡排序
+void BubbleSort1(int *arr, int sz) {
+	int i = 0;
+	int j = 0;
+	//assert(arr);
+	for (i = 0; i<sz - 1; i++) {
+		for (j = 0; j<sz - i - 1; j++) {
+			if (arr[j]>arr[j + 1]) {
+				int tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+		}
+	}
+}
+
+//文件读取写入练习
+/*
+设计一个程序，从in.txt读入数据，对每一行的数字都单独按从大到小的顺序排序，将结果输出到out.txt。每一行的数字第一个字符是数字标志，每个数字之间用空格隔开。如：
+读入：5 10 -20 2000 36 -100
+输出：2000 36 10 -20 -100（注意5只是个开始标志）。
+*/
+void sortFileNumAndOutput()
+{
+	char src[100] = {'\0'};
+	int i, j, t, num, nums[100];
+	FILE* in, *out;
+	in = fopen("in.txt", "r");
+	out = fopen("out.txt", "w+");
+	if (in == NULL)
+	{
+		printf("file does not exist");
+		fprintf(stderr, "file does not exist");
+	}
+	while (!feof(in))
+	{
+		fscanf(in,"%d", &num);
+		for  (i = 0; i < num; i++)
+		{
+			fscanf(in,"%d",&nums[i]);
+		}
+		for ( i = 0; i < num-1; i++)
+		{
+			for ( j = 0; j < num-i-1; j++)
+			{
+				if (nums[j] < nums[j + 1])
+				{
+					t = nums[j];
+					nums[j] = nums[j + 1];
+					nums[j + 1] = t;
+				}
+			}
+		}
+		int k = 0;
+		for (; k < num; k++)
+		{		
+			char temp[10];
+			sprintf(temp, "%d ", nums[k]);//格式化字符串
+			strcat(res, temp);
+		}
+		strcat(res, "\n");
+	}
+	fwrite(res, sizeof(res), 1, out);
+}
+
 #pragma endregion
 
 #pragma region Lib
@@ -1669,7 +1766,9 @@ int Get_Length_Of_Array(int array[])
 
 int main()
 {
-	countChars();
+	sortFileNumAndOutput();
+	//test_changeStrNumOrder();
+	//countChars();
 	//measureByWeight();
 	//outputWanShu();
 	//countDaysOfYear();
