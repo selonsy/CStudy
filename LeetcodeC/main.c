@@ -888,8 +888,65 @@ void primeNumber()
 #pragma region 大小堆问题
 
 /*
-请判断所给序列是不是堆，如果是，请输出是大顶堆还是小顶堆
+请判断所给序列是不是堆，如果是，请输出是大顶堆还是小顶堆.
 */
+//判断一个序列是否是堆,是什么类型的堆
+void judge_heap(int arr[],int size)
+{
+	int i;
+	int flag_b = 1, flag_s = 1;//默认同时是大小顶堆,当然这不可能实现
+	for ( i = 0; i < size/2; i++)
+	{			
+		if (((2 * i + 1 < size) && arr[i] < arr[2 * i + 1]) || ((2 * i + 2) < size&&arr[i] < arr[2 * i + 2]))
+		{
+			flag_b = 0;//不是大顶堆
+		}		
+		if (((2 * i + 1 < size) && arr[i] > arr[2 * i + 1]) || ((2 * i + 2) < size&&arr[i] > arr[2 * i + 2]))
+		{
+			flag_s = 0;//不是小顶堆
+		}
+	}
+	if (flag_b == 1 && flag_s == 0)printf("big heap");
+	else if (flag_b == 0 && flag_s == 1)printf("small heap");
+	else printf("no heap");
+}
+//建立大顶堆
+void adjustDown(int arr[], int k, int size)
+{
+	int i;
+	arr[0] = arr[k];
+	for ( i = 2*k; i <= size; i*=2)
+	{
+		if (i < size&&arr[i] < arr[i + 1])i++;
+		if (arr[0] >= arr[i])break;
+		else
+		{
+			arr[k] = arr[i];
+			k = i;
+		}
+	}
+	arr[k] = arr[0];
+}
+//建立小顶堆
+void adjustUp(int arr[], int k, int size)
+{
+	
+}
+void build_heap(int arr[], int size)
+{
+	int i;
+	for ( i = size/2; i > 0; i--)
+	{
+		adjustDown(arr, i, size);
+	}
+}
+void build_heap_test()
+{
+	int arr[5] = {0,9,5,2,7};
+	int arr1[8] = {87,45,78,32,17,65,53,9};
+	build_heap(arr, 4);
+	judge_heap(arr1, 8);
+}
 
 #pragma endregion
 
@@ -1644,22 +1701,6 @@ void test_changeStrNumOrder()
 	changeStrNumOrder(str);
 }
 
-//冒泡排序
-void BubbleSort1(int *arr, int sz) {
-	int i = 0;
-	int j = 0;
-	//assert(arr);
-	for (i = 0; i<sz - 1; i++) {
-		for (j = 0; j<sz - i - 1; j++) {
-			if (arr[j]>arr[j + 1]) {
-				int tmp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = tmp;
-			}
-		}
-	}
-}
-
 //文件读取写入练习
 /*
 设计一个程序，从in.txt读入数据，对每一行的数字都单独按从大到小的顺序排序，将结果输出到out.txt。每一行的数字第一个字符是数字标志，每个数字之间用空格隔开。如：
@@ -1762,11 +1803,129 @@ int Get_Length_Of_Array(int array[])
 	//return (sizeof(array) / sizeof(array[0]));
 }
 
+//冒泡排序
+int* sort_by_bubble(int arr[])
+{
+	int sz = sizeof(arr) / sizeof(arr[0]);//arr为首指针,此计算出的大小不对
+	int i = 0, j = 0;
+	for (i = 0; i<sz - 1; i++) {
+		for (j = 0; j<sz - i - 1; j++) {
+			if (arr[j]>arr[j + 1]) {
+				int tmp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = tmp;
+			}
+		}
+	}
+	return arr;
+}
+void sort_by_bubble1(int *arr, int sz) {
+	int i = 0, j = 0, temp;
+	for (i = 0; i < sz - 1; i++) {
+		for (j = 0; j < sz - i - 1; j++) {
+			if (arr[j] > arr[j + 1]) {
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+void sort_by_bubble_test()
+{
+	int arr[8] = { 1,2,3,4,5,9,78,6 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	//int * p = sort_by_bubble(arr);
+	sort_by_bubble1(arr, sz);
+	int i;
+	for (i = 0; i < sz; i++)
+	{
+		printf("%d ",/**(p+i)*/arr[i]);
+	}
+}
+
+//创建链表,创建头指针,输出链表
+typedef int ElementType;
+typedef struct DNode 
+{
+	ElementType data;
+	struct DNode *next;
+}DNode,*PDNode;
+PDNode create_head_1(ElementType data)
+{
+	PDNode node = (PDNode)malloc(sizeof(DNode));
+	if (node == NULL) 
+	{
+		exit(1);
+		//printf(stderr, "申请头结点失败");
+	}
+	node->data = data;
+	node->next = NULL;
+	return node;
+}
+PDNode create_list_1(PDNode head, int arr[], int type)
+{
+	//type==1表示顺序插,==2表示逆序插
+	//head头结点中的数据域用来保存链表的长度
+	int i;
+	PDNode p = head;
+	for (i = 0; i < head->data; i++)
+	{
+		PDNode tmp = (PDNode)malloc(sizeof(DNode));
+		tmp->data = arr[i];
+		tmp->next = NULL;
+		if (type == 1)
+		{
+			p->next = tmp;
+			p = tmp;
+		}
+		else if (type == 2)
+		{
+			tmp->next = p->next;
+			p->next = tmp;
+		}
+	}
+	return head;
+}
+void output_list_1(PDNode head)
+{
+	int i;
+	PDNode p = head->next;
+	for (i = 0; i < head->data&&p; i++)
+	{
+		printf("%d ", p->data);
+		p = p->next;
+	}
+}
+void create_list_test()
+{
+	int arr[5] = {9,5,2,7,4};
+	PDNode head = create_head_1(5);
+	PDNode p = create_list_1(head, arr, 1);
+	output_list_1(p);
+	PDNode q = create_list_1(head, arr, 2);
+	output_list_1(q);
+}
 #pragma endregion
+
+
+void mytest()
+{
+	int i,k=0;
+	for ( i = 1; i < 1000; i++)
+	{
+		if (i % 7 == 0 || i % 11 == 0)k++;
+	}
+	printf("%d",k);
+}
 
 int main()
 {
-	sortFileNumAndOutput();
+	mytest();
+	//build_heap_test();
+	//create_list_test();
+	//sort_by_bubble_test();
+	//sortFileNumAndOutput();
 	//test_changeStrNumOrder();
 	//countChars();
 	//measureByWeight();
