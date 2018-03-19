@@ -18,6 +18,18 @@
     <ClCompile Include="main.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="深度优先_广度优先搜索算法.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="动态规划.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="warshall算法.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="head.h">

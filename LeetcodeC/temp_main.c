@@ -954,6 +954,43 @@ void build_heap_test()
 
 #pragma region 普通算法题
 
+//二分查找
+
+/**
+*  折半查找函数
+*
+*  @param arr   数组
+*  @param len   数组长度
+*  @param value 查找元素
+*
+*  @return 返回查找元素的位置
+*/
+int searchItem(int arr[], int len, int value) {
+	int low = 0, high = len - 1, mid;
+	while (low <= high) {
+		mid = (low + high) / 2;
+		if (value > arr[mid]) {
+			low = mid + 1;
+		}
+		else if (value < arr[mid]) {
+			high = mid - 1;
+		}
+		else {
+			return mid;
+		}
+	}
+	return -1;
+}
+
+void searchItem_test(int argc, const char * argv[]) {
+	//数组必须是有序数组  
+	int a[10] = { 1,2,31,45,52,62,73,86,90,100 };
+	//查找86元素  
+	int l = searchItem(a, 10, 86);
+	printf("loc = %d\n", l);
+	return 0;
+}
+
 //求最长公共子串
 /*
 1.求最长公共子串
@@ -1755,8 +1792,6 @@ void sortFileNumAndOutput()
 #pragma region 算法思想
 
 //分治思想
-
-
 void maxmin(int A[], int n, int *max, int *min)
 {
 	int i;
@@ -1767,8 +1802,6 @@ void maxmin(int A[], int n, int *max, int *min)
 		if (A[i] < *min) *min = A[i];
 	}
 }
-
-//采用分治思想的方式
 void maxmin_fenzhi(int A[], int i, int j, int *max, int *min)
 {
 	/*
@@ -1795,7 +1828,6 @@ void maxmin_fenzhi(int A[], int i, int j, int *max, int *min)
 	*max = max1 > max2 ? max1 : max2;
 	*min = min1 < min2 ? min1 : min2;
 }
-
 void fenzhi()
 {
 	/*
@@ -1819,6 +1851,26 @@ void fenzhi()
 
 }
 
+//深度优先&广度优先
+
+
+//动态规划
+void Dynamic_Programming()
+{
+
+}
+
+//贪心算法
+void Greedy_Algorithm()
+{
+
+}
+
+//拓扑排序
+void Topological_Sort()
+{
+
+}
 #pragma endregion
 
 
@@ -1989,77 +2041,79 @@ void mytest()
 	printf("%d",k);
 }
 
-int main()
-{
-	fenzhi();
-	//mytest();
-
-	//build_heap_test();
-	//create_list_test();
-	//sort_by_bubble_test();
-	//sortFileNumAndOutput();
-	//test_changeStrNumOrder();
-	//countChars();
-	//measureByWeight();
-	//outputWanShu();
-	//countDaysOfYear();
-	//pickMonkeyKing();
-	//thorwPoker();
-	//moveBallByOrder();
-	//gcd_lcm();
-	//pickStone();
-	//minDistanceOfPlane();
-	//duo_xiang_shi_cheng();
-	//integerDecompose();
-	//maxSubstring();
-
-	system("pause");
-
-	return 0;
-
-	////NO.1
-	//int nums[] = { 2,7,11,15 };
-	//int *p = twoSum(nums, 4, 9);
-	//printf("[%d,%d]",p[0],p[1]);
-	////NO.2	
-	//int nums1[] = { 5 };// { 2,4,3 };
-	//int nums2[] = { 5 };// { 5,6,4 };
-	//PNode head_node1 = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//PNode head_node2 = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//PNode node_1,node_2;
-	//node_1 = head_node1;
-	//node_2 = head_node2;
-	//head_node1->data = nums1[0];
-	//head_node1->next = NULL;	
-	//head_node2->data = nums2[0];
-	//head_node2->next = NULL;
-	//for (int i = 1; i < sizeof(nums1)/sizeof(int); i++)
-	//{
-	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//	node_t->data = nums1[i];		
-	//	node_1->next = node_t;
-	//	node_1 = node_t;
-	//}
-	//for (int i = 1; i < sizeof(nums2) / sizeof(int); i++)
-	//{
-	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
-	//	node_t->data = nums2[i];
-	//	node_2->next = node_t;
-	//	node_2 = node_t;
-	//}
-	//node_1->next = NULL;
-	//node_2->next = NULL;
-	//	
-	//PNode result = addTwoNumbers(head_node1, head_node2);	
-	//DisPlay(result);
-	//NO.3
-	//char* s = "shenjinlong";
-	//int max = lengthOfLongestSubstring(s);
-	//printf("the length of max_substring is %d", max);
-	//spiralArray(3);
-	//personalRate();
-	//horseChess1();
-	//nlr1();
-	//bracketsMatch();
-	//primeNumber();	
-}
+//int main()
+//{
+//
+//	WarshallTest();
+//	//fenzhi();
+//	//mytest();
+//
+//	//build_heap_test();
+//	//create_list_test();
+//	//sort_by_bubble_test();
+//	//sortFileNumAndOutput();
+//	//test_changeStrNumOrder();
+//	//countChars();
+//	//measureByWeight();
+//	//outputWanShu();
+//	//countDaysOfYear();
+//	//pickMonkeyKing();
+//	//thorwPoker();
+//	//moveBallByOrder();
+//	//gcd_lcm();
+//	//pickStone();
+//	//minDistanceOfPlane();
+//	//duo_xiang_shi_cheng();
+//	//integerDecompose();
+//	//maxSubstring();
+//
+//	system("pause");
+//
+//	return 0;
+//
+//	////NO.1
+//	//int nums[] = { 2,7,11,15 };
+//	//int *p = twoSum(nums, 4, 9);
+//	//printf("[%d,%d]",p[0],p[1]);
+//	////NO.2	
+//	//int nums1[] = { 5 };// { 2,4,3 };
+//	//int nums2[] = { 5 };// { 5,6,4 };
+//	//PNode head_node1 = (PNode)malloc(sizeof(Node) / sizeof(char));
+//	//PNode head_node2 = (PNode)malloc(sizeof(Node) / sizeof(char));
+//	//PNode node_1,node_2;
+//	//node_1 = head_node1;
+//	//node_2 = head_node2;
+//	//head_node1->data = nums1[0];
+//	//head_node1->next = NULL;	
+//	//head_node2->data = nums2[0];
+//	//head_node2->next = NULL;
+//	//for (int i = 1; i < sizeof(nums1)/sizeof(int); i++)
+//	//{
+//	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
+//	//	node_t->data = nums1[i];		
+//	//	node_1->next = node_t;
+//	//	node_1 = node_t;
+//	//}
+//	//for (int i = 1; i < sizeof(nums2) / sizeof(int); i++)
+//	//{
+//	//	PNode node_t = (PNode)malloc(sizeof(Node) / sizeof(char));
+//	//	node_t->data = nums2[i];
+//	//	node_2->next = node_t;
+//	//	node_2 = node_t;
+//	//}
+//	//node_1->next = NULL;
+//	//node_2->next = NULL;
+//	//	
+//	//PNode result = addTwoNumbers(head_node1, head_node2);	
+//	//DisPlay(result);
+//	//NO.3
+//	//char* s = "shenjinlong";
+//	//int max = lengthOfLongestSubstring(s);
+//	//printf("the length of max_substring is %d", max);
+//	//spiralArray(3);
+//	//personalRate();
+//	//horseChess1();
+//	//nlr1();
+//	//bracketsMatch();
+//	//primeNumber();	
+//}

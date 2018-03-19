@@ -113,6 +113,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="warshall算法.cpp" />
+    <ClCompile Include="动态规划.cpp" />
+    <ClCompile Include="深度优先_广度优先搜索算法.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="head.h" />
