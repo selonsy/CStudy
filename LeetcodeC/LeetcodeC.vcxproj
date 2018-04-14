@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -112,14 +112,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.c" />
+    <ClCompile Include="leetcode刷题系列.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="warshall算法.cpp" />
+    <ClCompile Include="分治问题.cpp" />
     <ClCompile Include="动态规划.cpp" />
-    <ClCompile Include="深度优先_广度优先搜索算法.c" />
+    <ClCompile Include="大小堆问题.cpp" />
+    <ClCompile Include="A常见小算法.cpp" />
+    <ClCompile Include="排序问题.cpp" />
+    <ClCompile Include="文件操作.cpp" />
+    <ClCompile Include="深度优先_广度优先搜索算法.cpp" />
+    <ClCompile Include="贪心算法.cpp" />
+    <ClCompile Include="迷宫问题.cpp" />
+    <ClCompile Include="选择查找问题.cpp" />
+    <ClCompile Include="遍历问题.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="head.h" />
+    <ClInclude Include="myhead.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

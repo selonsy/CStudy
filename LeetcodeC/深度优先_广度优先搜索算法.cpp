@@ -1,5 +1,12 @@
+using namespace std;
+
 #include<stdio.h>
 #include<malloc.h>
+
+#include<iostream>
+#include<string>
+#include<queue>
+
 #define MaxVerNum 100 /*定义最大节点数*/
 int visited[MaxVerNum];
 typedef char VertexType;
@@ -153,4 +160,90 @@ void BFS_DFS_Test()
 	DFSTraverseAL(G);
 	printf("进行广度优先遍历\n");
 	BFSTraverseAL(G);
+}
+
+
+/*
+Description
+对于二叉树T，可以递归定义它的先序遍历、中序遍历和后序遍历如下： PreOrder(T)=T的根节点+PreOrder(T的左子树)+PreOrder(T的右子树) InOrder(T)=InOrder(T的左子树)+T的根节点+InOrder(T的右子树) PostOrder(T)=PostOrder(T的左子树)+PostOrder(T的右子树)+T的根节点 其中加号表示字符串连接运算。例如，对下图所示的二叉树，先序遍历为DBACEGF，中序遍历为ABCDEFG。
+输入一棵二叉树的先序遍历序列和中序遍历序列，输出它的广度优先遍历序列。
+
+Input
+第一行为一个整数t（0<t<10），表示测试用例个数。 以下t行，每行输入一个测试用例，包含两个字符序列s1和s2，其中s1为一棵二叉树的先序遍历序列，s2为中序遍历序列。s1和s2之间用一个空格分隔。序列只包含大写字母，并且每个字母最多只会出现一次。
+
+Output
+为每个测试用例单独一行输出广度优先遍历序列。
+
+Sample Input
+Copy sample input to clipboard
+2
+DBACEGF ABCDEFG
+BCAD CBAD
+Sample Output
+DBEACGF
+BCAD
+*/
+struct BitNode
+{
+	char c;
+	BitNode* lchild;
+	BitNode* rchild;
+};
+//先重建二叉树
+BitNode* rebuild(string pre, string in)
+{
+	BitNode* T = NULL;
+	if (pre.length()>0)
+	{
+		//前序遍历首元素为根结点
+		T = new BitNode();
+		T->c = pre[0];
+		T->lchild = NULL;
+		T->rchild = NULL;
+	}
+	if (pre.length()>1)
+	{
+		//find the position of root in inorder
+		int root = 0;
+		for (; in[root] != pre[0]; root++);
+
+		//recrusive
+		T->lchild = rebuild(pre.substr(1, root), in.substr(0, root));
+		T->rchild = rebuild(pre.substr(root + 1, pre.length() - 1 - root), in.substr(root + 1, in.length() - 1 - root));
+	}
+
+	return T;
+}
+//访问函数
+void visit(BitNode* T)
+{
+	cout << T->c;
+}
+//广度优先遍历
+void BFS(BitNode* T)
+{
+	//用一个队列储存已访问结点
+	queue<BitNode*> q;
+	q.push(T);
+
+	while (!q.empty())
+	{
+		BitNode* t1 = q.front();
+		q.pop();
+		visit(t1);
+		if (t1->lchild)
+			q.push(t1->lchild);
+		if (t1->rchild)
+			q.push(t1->rchild);
+	}
+	cout << endl;
+}
+int BFE_TEST()
+{
+	string pre, in;
+	cin >> pre >> in;
+
+	BFS(rebuild(pre, in));
+
+	return 0;
 }
